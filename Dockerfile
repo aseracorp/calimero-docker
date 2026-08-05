@@ -4,6 +4,8 @@ WORKDIR /usr/app
 
 COPY --chmod=0755 entrypoint.sh .
 
+# Set the environment variable for the timezone
+ENV TZ=Europe/Zurich
 ENV FRIENDLY_NAME="Calimero KNXnet/IP-Router"
 ENV NAME="calimero-knxserver"
 ENV PHYS_ADDRESS="0.1.0"
@@ -21,7 +23,10 @@ ENV SUBNET_TYPE="tpuart"
 
 USER root
 
-RUN apk add --no-cache yq
+# Install yq & timezone data and set the desired time zone
+RUN apk add --no-cache yq tzdata \
+&& ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+&& echo $TZ > /etc/timezone
 
 USER $user
 
