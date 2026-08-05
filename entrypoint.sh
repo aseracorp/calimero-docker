@@ -75,8 +75,7 @@ yq '{ "+p_xml": "version=\"1.0\" encoding=\"UTF-8\"",
 }
 | (.. | select(tag =="!!str")) |= envsubst' -i server-config.xml
 
-#echo "This is the content of /usr/app/Calimero-ios.xml"
-#echo "$(cat /usr/app/Calimero-ios.xml)"
+#remove the file that creates a issue starting the container.
 rm -f /usr/app/Calimero-ios.xml
 
 # Run the standard container command.
